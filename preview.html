@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RackSketch — быстрая расстановка складских стеллажей</title>
+  <meta name="description" content="RackSketch — программа для создания готовой схемы расстановки стеллажей. Меняйте компоновку вместе с клиентом и используйте согласованный вариант в коммерческой работе.">
+  <meta name="theme-color" content="#607D3C">
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjEzIiBmaWxsPSIjNjA3RDNDIi8+CjxwYXRoIGQ9Ik0xNSAxMHY0NE00OSAxMHY0NE0xNSAxOWgzNE0xNSAzOWgzNCIgc3Ryb2tlPSIjZjdmNGU5IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJtMjcgMjUgMTAgMTBtLTEwIDAgMTAtMTAiIHN0cm9rZT0iI0ZGQUU4MyIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" type="image/svg+xml">
+  <style>
+/* RackSketch v0.5 — typography and spacing, olive/coral palette. */
+:root {
+  --forest: #607d3c;
+  --forest-deep: #435d2d;
+  --leaf: #799f4b;
+  --orange: #ea7752;
+  --orange-light: #ffae83;
+  --cream: #fffaf2;
+  --ink: #343e28;
+  --muted: #727662;
+  --line: #ebe6d7;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--cream);
+}
+img, svg { max-width: 100%; }
+a:focus-visible { outline: 3px solid var(--forest-deep); outline-offset: 5px; }
+.container { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+
+/* The existing SVG is used intact. Its internal whitespace is allowed for here. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner { min-height: 76px; display: flex; align-items: center; gap: 30px; }
+.brand { display: inline-flex; align-items: center; flex: 0 0 auto; text-decoration: none; }
+.brand-wordmark { display: block; height: 44px; width: auto; transform: translateY(-2px); }
+.nav { display: flex; gap: 28px; margin-left: auto; }
+.nav a { color: var(--forest-deep); text-decoration: none; font-size: 14px; font-weight: 600; }
+.nav a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 19px;
+  border: 1px solid var(--orange);
+  border-radius: 7px;
+  background: var(--orange);
+  color: #302c21;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.45;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.button:hover { background: var(--orange-light); border-color: var(--orange-light); }
+.button-small { font-size: 14px; padding: 9px 15px; }
+.button-secondary { background: transparent; color: var(--forest-deep); border-color: #a7b7a9; }
+.button-secondary:hover { background: #f5eed7; border-color: var(--forest); }
+
+/* Hero: one dominant headline, with a quieter eyebrow and supporting copy. */
+.hero {
+  background: linear-gradient(145deg, #fff9ef, #f5f3dc);
+  border-bottom: 1px solid var(--line);
+  padding: 76px 0 80px;
+}
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: 48px; align-items: center; }
+.hero-copy { min-width: 0; }
+.eyebrow { margin-bottom: 14px; color: var(--forest); font-size: 12px; font-weight: 650; letter-spacing: .06em; line-height: 1.5; }
+.hero-eyebrow { color: var(--orange); font-size: 14px; font-weight: 650; letter-spacing: 0; line-height: 1.5; margin-bottom: 18px; }
+h1 {
+  margin: 0 0 23px;
+  color: var(--forest-deep);
+  font-size: clamp(38px, 4.1vw, 54px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.hero-text { max-width: 52ch; margin: 0 0 26px; color: #4b6153; font-size: 18px; line-height: 1.65; }
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-note { max-width: 52ch; margin-top: 20px; color: #6a7b6b; font-size: 12px; line-height: 1.6; }
+
+/* Keep the existing schematic, give it stable geometry and a normal caption. */
+.product-preview { min-width: 0; margin: 0; }
+.app-card { border: 1px solid #d7ddcc; border-radius: 10px; overflow: hidden; background: #edf1e9; box-shadow: 0 12px 28px rgb(67 93 45 / 8%); }
+.mockup-caption { margin-top: 12px; color: #6d7d71; font-size: 11px; line-height: 1.55; text-align: left; }
+.app-topbar { min-height: 43px; display: flex; align-items: center; gap: 12px; padding: 0 14px; border-bottom: 1px solid #cbd7cb; background: #e7eee4; }
+.dots { display: flex; gap: 5px; flex-shrink: 0; }
+.dots span { width: 7px; height: 7px; border-radius: 50%; background: #b4c6b5; }
+.dots span:first-child { background: var(--orange-light); }
+.app-title { margin-inline: auto; padding-right: 31px; color: #58705e; font-size: 11px; }
+.app-body { display: grid; grid-template-columns: 40px minmax(0, 1fr) 114px; height: 340px; }
+.toolbar { border-right: 1px solid #cbd7cb; padding: 10px 5px; }
+.tool { height: 31px; margin-bottom: 8px; border-radius: 5px; display: grid; place-items: center; color: #6f8672; background: #e5ede4; }
+.tool.active { background: #d2e3d2; color: var(--forest); }
+.canvas { min-width: 0; position: relative; padding: 22px; background-color: #f7f8f1; background-image: linear-gradient(#e6eae1 1px, transparent 1px), linear-gradient(90deg, #e6eae1 1px, transparent 1px); background-size: 22px 22px; }
+.room { position: relative; height: 100%; border: 2px solid #8ca992; }
+.rack { position: absolute; width: 68%; height: 32px; border: 2px solid var(--forest); background: rgb(94 143 96 / 17%); display: flex; }
+.rack span { flex: 1; min-width: 0; border-right: 1px solid var(--forest); }
+.rack span:last-child { border-right: 0; }
+.r1 { left: 11%; top: 16%; }
+.r2 { left: 28%; top: 45%; width: 51%; }
+.r3 { left: 11%; bottom: 13%; }
+.dimension { position: absolute; font-size: 10px; line-height: 1.3; color: var(--forest); background: #fff; padding: 2px 4px; border: 1px solid #cad6c9; border-radius: 3px; }
+.d1 { left: 41%; top: 34%; }
+.d2 { right: 7%; top: 5%; }
+.properties { border-left: 1px solid #cbd7cb; padding: 14px 9px; color: #6b7c70; font-size: 10px; background: #eef2ea; }
+.prop-title { font-size: 11px; color: var(--forest); font-weight: 650; margin-bottom: 13px; }
+.properties label { display: block; margin-top: 9px; }
+.field { margin-top: 3px; padding: 6px; background: #fafbf7; border: 1px solid #cbd8c9; border-radius: 4px; color: #344d3c; }
+.field.accent { border-color: var(--orange); color: #9c4c22; }
+
+/* The same six cards and four steps, with a common type scale. */
+.section { padding: 84px 0; }
+.section-heading { max-width: 730px; margin-bottom: 34px; }
+.section-heading h2, .two-col h2, .demo-box h2 {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 3vw, 40px);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.section-heading p { max-width: 64ch; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.6; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.feature-card { padding: 25px 26px 27px; border: 1px solid var(--line); border-radius: 9px; background: #fffefa; }
+.feature-card .icon { display: flex; align-items: center; width: 26px; height: 26px; color: var(--forest); }
+.feature-card .icon svg { display: block; width: 24px; height: 24px; }
+.feature-card h3 { margin: 18px 0 9px; font-size: 18px; font-weight: 650; line-height: 1.35; letter-spacing: -.012em; }
+.feature-card p { max-width: 38ch; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+.section-dark { background: var(--forest); color: #f8f6ec; }
+.section-dark .eyebrow { color: var(--orange-light); }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.step { padding: 23px 22px 26px; border: 1px solid rgb(255 255 255 / 25%); border-radius: 8px; background: transparent; }
+.step span { font-size: 13px; color: var(--orange-light); font-weight: 650; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.step h3 { margin: 22px 0 10px; font-size: 17px; font-weight: 650; line-height: 1.4; }
+.step p { margin: 0; color: #f7fcf7; font-size: 15px; line-height: 1.6; }
+
+/* Long audience copy needs one readable column within each row. */
+.two-col { display: grid; grid-template-columns: .82fr 1.18fr; gap: 72px; align-items: start; }
+.two-col h2 { max-width: 20ch; font-size: clamp(30px, 3vw, 38px); }
+.audience-list { border-top: 1px solid var(--line); }
+.audience-list > div { display: grid; gap: 8px; padding: 23px 0 25px; border-bottom: 1px solid var(--line); }
+.audience-list strong { font-size: 17px; font-weight: 650; line-height: 1.4; }
+.audience-list span { max-width: 65ch; color: var(--muted); font-size: 15px; line-height: 1.65; }
+.demo-section { padding-top: 0; }
+.demo-box { display: flex; align-items: center; justify-content: space-between; gap: 38px; padding: 36px 38px; border-radius: 12px; background: #f5f0da; border: 1px solid var(--line); }
+.demo-box h2 { max-width: 36ch; font-size: clamp(26px, 2.5vw, 32px); }
+.demo-box p { max-width: 67ch; margin: 14px 0 0; color: #536b58; font-size: 15px; line-height: 1.65; }
+.demo-badge { flex: 0 0 136px; text-align: center; padding: 20px 14px; border: 1px solid #b3c8b3; border-radius: 8px; font-size: 28px; font-weight: 650; line-height: 1.25; color: var(--forest-deep); }
+.demo-badge span { display: inline-block; margin-top: 7px; font-size: 12px; font-weight: 500; color: #536b58; }
+footer { padding: 28px 0; background: var(--forest-deep); color: #d5dfd0; font-size: 12px; line-height: 1.6; }
+.footer-inner { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+
+@media (max-width: 1050px) {
+  .hero-grid { gap: 30px; }
+  .hero-actions { gap: 9px; }
+  .app-body { grid-template-columns: 34px minmax(0, 1fr) 96px; height: 315px; }
+  .canvas { padding: 15px; }
+  .properties { padding-inline: 7px; }
+  .two-col { gap: 44px; }
+  .step { padding-inline: 18px; }
+}
+@media (max-width: 850px) {
+  .nav { display: none; }
+  .header-inner > .button { margin-left: auto; }
+  .hero { padding: 60px 0 64px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero-copy { max-width: 650px; }
+  h1 { max-width: 22ch; font-size: clamp(38px, 6.5vw, 52px); }
+  .product-preview { width: 100%; max-width: 650px; }
+  .app-body { height: 335px; grid-template-columns: 40px minmax(0, 1fr) 120px; }
+  .canvas { padding: 22px; }
+  .feature-grid, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two-col { grid-template-columns: 1fr; gap: 24px; }
+  .two-col h2 { max-width: 28ch; margin-bottom: 0; }
+}
+@media (max-width: 620px) {
+  .container { width: calc(100% - 36px); }
+  .header-inner { min-height: 68px; gap: 14px; }
+  .brand-wordmark { height: 40px; }
+  .button-small { display: none; }
+  .hero { padding: 42px 0 50px; }
+  .hero-grid { gap: 30px; }
+  .hero-eyebrow { max-width: 35ch; font-size: 14px; line-height: 1.55; margin-bottom: 15px; }
+  h1 { font-size: clamp(34px, 8.6vw, 45px); letter-spacing: -.028em; line-height: 1.14; margin-bottom: 20px; }
+  .hero-text { font-size: 17px; line-height: 1.6; margin-bottom: 23px; }
+  .hero-note { font-size: 12px; margin-top: 18px; }
+  .button { padding: 11px 15px; }
+  .app-body { grid-template-columns: 34px minmax(0, 1fr); height: 278px; }
+  .properties { display: none; }
+  .canvas { padding: 17px; }
+  .rack { height: 28px; }
+  .mockup-caption { max-width: 42ch; font-size: 11px; }
+  .section { padding: 60px 0; }
+  .section-heading { margin-bottom: 27px; }
+  .section-heading h2, .two-col h2 { font-size: 30px; letter-spacing: -.023em; }
+  .section-heading p { font-size: 16px; }
+  .feature-grid, .steps { grid-template-columns: 1fr; gap: 13px; }
+  .feature-card { padding: 23px; }
+  .feature-card h3 { margin-top: 14px; }
+  .step { padding: 22px 23px 24px; }
+  .step h3 { margin-top: 14px; }
+  .audience-list > div { padding-block: 21px; }
+  .demo-section { padding-top: 0; }
+  .demo-box { padding: 27px 24px; flex-direction: column; align-items: flex-start; gap: 25px; }
+  .demo-box h2 { font-size: 27px; }
+  .demo-badge { flex-basis: auto; min-width: 130px; padding: 15px 20px; font-size: 25px; }
+  .footer-inner { flex-direction: column; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .button { transition: none; }
+}
+
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="RackSketch">
+        <img class="brand-wordmark" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNzAuMTMgNzgiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iUmFja1NrZXRjaCI+PHBhdGggZD0iTTY4IDBIMjA1VjI4M0wzOTkgMEg1NjhMMzY4IDI3M0M0MjUgMjg3IDQ1MyAzMDAgNDg1IDMyN0M1MzYgMzcwIDU2MSA0MjggNTYxIDUwMkM1NjEgNTc4IDUzNCA2NDEgNDgzIDY4NEM0MzUgNzI1IDM4MiA3MzkgMjgxIDczOUg2OFpNMjA1IDM4NlY2MDhIMjY2QzMzMCA2MDggMzY1IDYwMSAzODcgNTgyQzQxMSA1NjMgNDIzIDUzNCA0MjMgNDk4QzQyMyA0MjAgMzc4IDM4NiAyNzIgMzg2WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNS4wMDAsNjUuMDAwKSBzY2FsZSgwLjA2MjAwMCwtMC4wNjIwMDApIiBmaWxsPSIjMzU0OTM5Ii8+PHBhdGggZD0iTTYxNSA1NTRINDkzVjQ4MEM0NDcgNTQxIDM5MiA1NjcgMzEyIDU2N0MxNDggNTY3IDMwIDQ0NCAzMCAyNzVDMzAgMTA4IDE0NyAtMTMgMzA5IC0xM0MzODcgLTEzIDQ0MCAxMSA0OTMgNzJWMEg2MTVaTTMyNiA0NDVDNDIxIDQ0NSA0ODkgMzc0IDQ4OSAyNzNDNDg5IDIzMyA0NzMgMTg3IDQ0OSAxNTlDNDIyIDEyNiAzNzkgMTA5IDMyOCAxMDlDMjMxIDEwOSAxNjQgMTc1IDE2NCAyNzJDMTY0IDM3MyAyMzEgNDQ1IDMyNiA0NDVaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzOS44NjAsNjUuMDAwKSBzY2FsZSgwLjA2MjAwMCwtMC4wNjIwMDApIiBmaWxsPSIjMzU0OTM5Ii8+PHBhdGggZD0iTTQ1MSAxODJDNDE4IDEzMSAzODAgMTA5IDMyNSAxMDlDMjMzIDEwOSAxNjQgMTgxIDE2NCAyNzhDMTY0IDM3NiAyMjkgNDQ1IDMyMiA0NDVDMzgyIDQ0NSA0MjQgNDIwIDQ1MSAzNjlINjAxQzU4MiA0MjUgNTY0IDQ1NCA1MjYgNDg5QzQ3MiA1MzkgMzk5IDU2NyAzMjIgNTY3QzE1OCA1NjcgMzAgNDQwIDMwIDI3N0MzMCAxMTYgMTYyIC0xMyAzMjYgLTEzQzQ1NiAtMTMgNTU1IDU4IDYwMSAxODJaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3OS42ODAsNjUuMDAwKSBzY2FsZSgwLjA2MjAwMCwtMC4wNjIwMDApIiBmaWxsPSIjMzU0OTM5Ii8+PHBhdGggZD0iTTEyNC4yNiAxN1Y2NU0xMjUuMjYgNDlMMTQ2LjI2IDMxTTEzMi4yNiA0NEwxNDguMjYgNjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM1NDkzOSIgc3Ryb2tlLXdpZHRoPSI1LjgiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTE4OC4yNiAyNUMxODAuMjYgMTcgMTYwLjI2IDE3IDE1OC4yNiAzMkMxNTYuMjYgNDMgMTkwLjI2IDM5IDE5MC4yNiA1M0MxOTAuMjYgNjggMTY3LjI2IDcwIDE1Ni4yNiA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzU0OTM5IiBzdHJva2Utd2lkdGg9IjYuMCIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiLz48cGF0aCBkPSJNNTQgMEgxODdWMjU5TDM3NiAwSDU1NUwzMjUgMjgzTDUyMyA1NTRIMzY0TDE4NyAyOTNWNzM5SDU0WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTk5LjI2MCw2NS4wMDApIHNjYWxlKDAuMDYyMDAwLC0wLjA2MjAwMCkiIGZpbGw9IiMzNTQ5MzkiLz48cGF0aCBkPSJNNjAzIDIxOEM2MDcgMjM4IDYwOCAyNTAgNjA4IDI3MEM2MDggNDQxIDQ4NyA1NjcgMzIyIDU2N0MxNTkgNTY3IDMwIDQzOCAzMCAyNzVDMzAgMTEzIDE2MSAtMTMgMzMwIC0xM0M0MjEgLTEzIDQ5MiAyMCA1NTAgODdDNTcxIDExMyA1ODUgMTM2IDU5NCAxNjRINDQ5QzQxNSAxMjQgMzgyIDEwOSAzMjcgMTA5QzI0OCAxMDkgMTkwIDE1MSAxNzQgMjE4Wk0xNzAgMzM1QzE5MSA0MDcgMjQ1IDQ0NSAzMjQgNDQ1QzQwNiA0NDUgNDYwIDQwNiA0NzcgMzM1WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjM0LjE3MCw2NS4wMDApIHNjYWxlKDAuMDYyMDAwLC0wLjA2MjAwMCkiIGZpbGw9IiMzNTQ5MzkiLz48cGF0aCBkPSJNNzQgMEgyMDdWNDMzSDI4N1Y1NTRIMjA3VjczOUg3NFY1NTRIOVY0MzNINzRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNzIuODAwLDY1LjAwMCkgc2NhbGUoMC4wNjIwMDAsLTAuMDYyMDAwKSIgZmlsbD0iIzM1NDkzOSIvPjxwYXRoIGQ9Ik00NTEgMTgyQzQxOCAxMzEgMzgwIDEwOSAzMjUgMTA5QzIzMyAxMDkgMTY0IDE4MSAxNjQgMjc4QzE2NCAzNzYgMjI5IDQ0NSAzMjIgNDQ1QzM4MiA0NDUgNDI0IDQyMCA0NTEgMzY5SDYwMUM1ODIgNDI1IDU2NCA0NTQgNTI2IDQ4OUM0NzIgNTM5IDM5OSA1NjcgMzIyIDU2N0MxNTggNTY3IDMwIDQ0MCAzMCAyNzdDMzAgMTE2IDE2MiAtMTMgMzI2IC0xM0M0NTYgLTEzIDU1NSA1OCA2MDEgMTgyWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjkwLjM1MCw2NS4wMDApIHNjYWxlKDAuMDYyMDAwLC0wLjA2MjAwMCkiIGZpbGw9IiMzNTQ5MzkiLz48cGF0aCBkPSJNNTQgMEgxODdWMjgxQzE4NyAzMzYgMTkyIDM2NyAyMDYgMzkyQzIyNiA0MjYgMjYwIDQ0NSAzMDQgNDQ1QzM4MiA0NDUgNDEyIDQwMCA0MTIgMjgzVjBINTQ1VjMxM0M1NDUgMzk0IDUzNSA0MzkgNTA4IDQ4MEM0NzEgNTM3IDQwNyA1NjggMzI4IDU2OEMyNzAgNTY4IDIyNyA1NTIgMTg3IDUxNlY3MzlINTRaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjguOTgwLDY1LjAwMCkgc2NhbGUoMC4wNjIwMDAsLTAuMDYyMDAwKSIgZmlsbD0iIzM1NDkzOSIvPjwvc3ZnPgo=" width="370" height="78" alt="">
+      </a>
+      <nav class="nav" aria-label="Разделы сайта">
+        <a href="#features">Возможности</a>
+        <a href="#workflow">Как работает</a>
+        <a href="#audience">Для кого</a>
+      </nav>
+      <a class="button button-small" href="#demo">О проекте</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow hero-eyebrow">Расстановка стеллажей для работы с клиентом</div>
+          <h1>Схема расстановки, которую удобно обсудить с клиентом</h1>
+          <p class="hero-text">
+            Быстро создавайте готовую схему расстановки стеллажей, меняйте её вместе с клиентом
+            и согласовывайте компоновку прямо во время обсуждения.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#features">Узнать о возможностях</a>
+            <a class="button button-secondary" href="#workflow">Как это работает</a>
+          </div>
+          <div class="hero-note">
+            Программа для Windows · паллетные и среднегрузовые стеллажи
+          </div>
+        </div>
+
+        <figure class="product-preview">
+        <div class="app-card" role="img" aria-label="Схематичная иллюстрация плана склада со стеллажами">
+          <div class="app-topbar">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <div class="app-title">RackSketch — Склад 01</div>
+          </div>
+          <div class="app-body">
+            <aside class="toolbar">
+              <div class="tool active">↖</div>
+              <div class="tool">▭</div>
+              <div class="tool">↔</div>
+              <div class="tool">⌁</div>
+            </aside>
+            <div class="canvas">
+              <div class="room">
+                <div class="rack r1"><span></span><span></span><span></span><span></span></div>
+                <div class="rack r2"><span></span><span></span><span></span></div>
+                <div class="rack r3"><span></span><span></span><span></span><span></span></div>
+                <div class="dimension d1">3200</div>
+                <div class="dimension d2">1050</div>
+              </div>
+            </div>
+            <aside class="properties">
+              <div class="prop-title">Свойства</div>
+              <label>Тип</label><div class="field">Паллетный</div>
+              <label>Секций</label><div class="field">4</div>
+              <label>Глубина</label><div class="field">1100 мм</div>
+              <label>Проход</label><div class="field accent">3200 мм</div>
+            </aside>
+          </div>
+        </div>
+        <figcaption class="mockup-caption">Схематичная иллюстрация — не снимок экрана программы</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">ВОЗМОЖНОСТИ</div>
+          <h2>От размеров склада до готовой схемы</h2>
+          <p>Наглядный результат для согласования с клиентом и коммерческой работы.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h7m2 0h7v7m0 2v7h-7m-2 0H4v-7"/><path d="M4 9h4V4"/></svg></div>
+            <h3>Быстрый старт</h3>
+            <p>Задайте помещение и сразу переходите к размещению стеллажей.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 4v16m5-16v16m5-16v16M3 12h18"/></svg></div>
+            <h3>Наглядный план</h3>
+            <p>Покажите размещение оборудования в масштабе помещения.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="16" rx="1"/><rect x="14" y="8" width="7" height="12" rx="1"/><path d="M3 10h7m-7 5h7m4-2h7"/></svg></div>
+            <h3>Два типа стеллажей</h3>
+            <p>Работайте с паллетными и среднегрузовыми системами в одном проекте.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h8v16H3zM15 4h6v16h-6zM3 9h8m-8 6h8m4-6h6m-6 6h6"/></svg></div>
+            <h3>План и фронтальный вид</h3>
+            <p>Обсуждайте размещение стеллажей, высоты и количество уровней.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 18h16M8 3v6m8 6v6"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="18" r="2"/></svg></div>
+            <h3>Гибкая компоновка</h3>
+            <p>Меняйте расположение и параметры, когда задача клиента уточняется.</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6zM15 3v5h4M9 12h7m-7 4h5"/></svg></div>
+            <h3>Результат для клиента</h3>
+            <p>Покажите готовую схему, согласуйте расстановку и используйте её для подготовки предложения.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="workflow">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">КАК РАБОТАЕТ</div>
+          <h2>Готовая схема за четыре шага</h2>
+        </div>
+        <div class="steps">
+          <div class="step"><span>01</span><h3>Задать помещение</h3><p>Внести основные размеры и геометрию склада.</p></div>
+          <div class="step"><span>02</span><h3>Создать компоновку</h3><p>Добавить стеллажи и задать параметры секций.</p></div>
+          <div class="step"><span>03</span><h3>Уточнить решение</h3><p>Меняйте расположение и параметры вместе с клиентом.</p></div>
+          <div class="step"><span>04</span><h3>Обсудить результат</h3><p>Согласуйте схему и используйте её в дальнейшей коммерческой работе.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="audience">
+      <div class="container two-col">
+        <div>
+          <div class="eyebrow">ДЛЯ КОГО</div>
+          <h2>Когда схему удобно создавать вместе с клиентом</h2>
+        </div>
+        <div class="audience-list">
+          <div><strong>Менеджерам по продажам стеллажей</strong><span>Быстро собрать, изменить и показать клиенту готовую схему расстановки прямо во время обсуждения.</span></div>
+          <div><strong>Проектировщикам</strong><span>Быстрее выполнять типовые компоновки и оперативно вносить изменения без лишней ручной отрисовки.</span></div>
+          <div><strong>Поставщикам складского оборудования</strong><span>Согласовывать компоновку с клиентом и быстрее переходить к расчёту комплектации и коммерческому предложению.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section demo-section" id="demo">
+      <div class="container demo-box">
+        <div>
+          <div class="eyebrow">СТАТУС ПРОЕКТА</div>
+          <h2>RackSketch развивается и проходит пилотную проверку</h2>
+          <p>
+            Сейчас мы дорабатываем инструменты компоновки и проверяем рабочие сценарии.
+            Способ связаться с командой появится здесь позже.
+          </p>
+        </div>
+        <div class="demo-badge">v0.4<br><span>в разработке</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 RackSketch</span>
+      <span>Программа для создания и согласования схем расстановки стеллажей</span>
+    </div>
+  </footer>
+</body>
+</html>
