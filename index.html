@@ -3,173 +3,110 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RackSketch — быстрая расстановка складских стеллажей</title>
-  <meta name="description" content="RackSketch — программа для создания готовой схемы расстановки стеллажей. Меняйте компоновку вместе с клиентом и используйте согласованный вариант в коммерческой работе.">
-  <meta name="theme-color" content="#607D3C">
+  <title>RackSketch — расстановка, понятная вам и клиенту</title>
+  <meta name="description" content="Готовая схема расстановки стеллажей для обсуждения и согласования с клиентом. Понятный старт без освоения AutoCAD, план помещения и фронтальный вид в RackSketch.">
+  <meta name="theme-color" content="#435D2D">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="RackSketch">
-        <img class="brand-wordmark" src="racksketch-wordmark-05.svg" width="370" height="78" alt="">
-      </a>
-      <nav class="nav" aria-label="Разделы сайта">
-        <a href="#features">Возможности</a>
-        <a href="#workflow">Как работает</a>
-        <a href="#audience">Для кого</a>
-      </nav>
-      <a class="button button-small" href="#demo">О проекте</a>
+      <a class="brand" href="#top" aria-label="RackSketch — на главную"><img src="racksketch-wordmark-05.svg" width="370" height="78" alt="RackSketch"></a>
+      <nav aria-label="Основная навигация"><a href="#workflow">Как работает</a><a href="#views">Возможности</a><a href="#audience">Для кого</a></nav>
+      <a class="header-link" href="#project">О проекте <span aria-hidden="true">↗</span></a>
     </div>
   </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow hero-eyebrow">Расстановка стеллажей для работы с клиентом</div>
-          <h1>Схема расстановки, которую удобно обсудить с клиентом</h1>
-          <p class="hero-text">
-            Быстро создавайте готовую схему расстановки стеллажей, меняйте её вместе с клиентом
-            и согласовывайте компоновку прямо во время обсуждения.
-          </p>
-          <div class="hero-actions">
-            <a class="button" href="#features">Узнать о возможностях</a>
-            <a class="button button-secondary" href="#workflow">Как это работает</a>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="warehouse-backdrop" aria-hidden="true"></div>
+      <div class="container">
+        <div class="hero-intro">
+          <div class="hero-heading">
+            <p class="eyebrow coral">Расстановка стеллажей для работы с клиентом</p>
+            <h1>Расстановка,<br>понятная вам<br>и клиенту<span class="full-stop">.</span></h1>
           </div>
-          <div class="hero-note">
-            Программа для Windows · паллетные и среднегрузовые стеллажи
+          <div class="hero-copy">
+            <p class="hero-description">От размеров помещения<br class="desktop-br"> до готовой схемы расстановки.</p>
+            <p>Создавайте план, меняйте его вместе с клиентом и согласовывайте решение прямо во время обсуждения.</p>
+            <a class="button" href="#product">Посмотреть, как это работает <span aria-hidden="true">↓</span></a>
+            <p class="platform">Для Windows <span>·</span> Паллетные и среднегрузовые стеллажи</p>
           </div>
         </div>
-
-        <figure class="product-preview">
-        <div class="app-card" role="img" aria-label="Схематичная иллюстрация плана склада со стеллажами">
-          <div class="app-topbar">
-            <div class="dots"><span></span><span></span><span></span></div>
-            <div class="app-title">RackSketch — Склад 01</div>
-          </div>
-          <div class="app-body">
-            <aside class="toolbar">
-              <div class="tool active">↖</div>
-              <div class="tool">▭</div>
-              <div class="tool">↔</div>
-              <div class="tool">⌁</div>
-            </aside>
-            <div class="canvas">
-              <div class="room">
-                <div class="rack r1"><span></span><span></span><span></span><span></span></div>
-                <div class="rack r2"><span></span><span></span><span></span></div>
-                <div class="rack r3"><span></span><span></span><span></span><span></span></div>
-                <div class="dimension d1">3200</div>
-                <div class="dimension d2">1050</div>
+        <figure class="product-figure" id="product">
+          <div class="product-topnote"><span class="technical-label">Рабочее пространство / концепция</span><span>План → выбор ряда → параметры</span></div>
+          <noscript><p class="noscript-note">Схема показана статично. Для выбора рядов и переключения видов включите JavaScript.</p></noscript>
+          <div class="product-app" aria-label="Интерактивная концепция интерфейса RackSketch">
+            <div class="app-titlebar"><span class="app-name">RackSketch</span><span class="project-name">Склад «Северный» <span>/</span> Компоновка 01</span><span class="app-example">Учебный пример</span></div>
+            <div class="app-commandbar">
+              <div class="view-tabs" role="tablist" aria-label="Вид рабочего пространства">
+                <button id="tab-plan" role="tab" aria-selected="true" aria-controls="panel-plan" data-view="plan">План помещения</button>
+                <button id="tab-front" role="tab" aria-selected="false" aria-controls="panel-front" tabindex="-1" data-view="front">Фронтальный вид</button>
               </div>
+              <span class="room-meta">Помещение <b>24 × 18 м</b></span>
             </div>
-            <aside class="properties">
-              <div class="prop-title">Свойства</div>
-              <label>Тип</label><div class="field">Паллетный</div>
-              <label>Секций</label><div class="field">4</div>
-              <label>Глубина</label><div class="field">1100 мм</div>
-              <label>Проход</label><div class="field accent">3200 мм</div>
-            </aside>
+            <div class="app-workspace">
+              <aside class="app-library" aria-label="Ряды на плане">
+                <div class="library-intro"><span class="panel-label">Оборудование</span><div class="equipment-type"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16M20 4v16M4 8h16M4 16h16M12 8v8"/></svg><span>Паллетные</span></div><div class="equipment-type"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M19 4v16M5 7h14M5 12h14M5 17h14"/></svg><span>Среднегрузовые</span></div></div>
+                <div class="row-list"><span class="panel-label">На плане <span>3 ряда</span></span><button class="row-choice" data-select-row="01" aria-pressed="false"><i aria-hidden="true"></i><span>Ряд 01<small>Паллетный · 4 секции</small></span></button><button class="row-choice is-selected" data-select-row="02" aria-pressed="true"><i aria-hidden="true"></i><span>Ряд 02<small>Паллетный · 4 секции</small></span></button><button class="row-choice" data-select-row="03" aria-pressed="false"><i aria-hidden="true"></i><span>Ряд 03<small>Среднегрузовой · 6 секций</small></span></button></div>
+                <p class="library-tip">Выберите ряд на плане или в списке — его параметры появятся справа.</p>
+              </aside>
+              <div class="app-stage">
+                <div id="panel-plan" class="view-panel" role="tabpanel" aria-labelledby="tab-plan" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="group" aria-label="План склада 24 на 18 метров. Два паллетных ряда по четыре секции и среднегрузовой ряд из шести секций." fill="none" font-family="Segoe UI, Arial, sans-serif"><defs><pattern id="hero-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" stroke="#dfe5d8" stroke-width=".6"/></pattern></defs><rect width="800" height="600" fill="#f8f9f3"/><rect width="800" height="600" fill="url(#hero-grid)"/><g stroke="#8c9a80" stroke-width="1"><path d="M100 56V25M700 56V25M100 36H700M88 70H57M88 520H57M68 70V520"/><path d="m96 40 8-8m592 8 8-8M64 74l8-8m-8 458 8-8"/></g><g fill="#617153" font-size="13"><rect x="359" y="24" width="80" height="22" fill="#f8f9f3"/><text x="400" y="40" text-anchor="middle">24 000</text><text transform="translate(51 295) rotate(-90)" text-anchor="middle">18 000</text></g><path d="M460 520H100V70H700V520H610" stroke="#667b55" stroke-width="4"/><path d="M460 528H610M460 515v17m150-17v17" stroke="#94a08b"/><text x="535" y="551" fill="#728068" font-size="12" text-anchor="middle">Зона загрузки</text><g fill="#d9dfcf" stroke="#839474"><rect x="476" y="76" width="9" height="9"/><rect x="476" y="298" width="9" height="9"/></g><rect x="145" y="169" width="270" height="77" fill="#eff1e6"/><g stroke="#a3ad97" stroke-width="1"><path d="M430 167.5h30m-30 80h30m-12-80v80m-4-76 8-8m-8 84 8-8"/></g><rect x="426" y="194" width="46" height="24" rx="3" fill="#f8f9f3"/><text x="449" y="210" fill="#65764e" font-size="11" text-anchor="middle">3 200</text><g class="rack-row" data-plan-row="01" tabindex="0" role="button" aria-label="Выбрать ряд 01" aria-pressed="false"><rect class="rack-fill" x="145" y="140" width="270.0" height="27.5" fill="#e8ecdf" stroke="#60734f" stroke-width="1.7"/><g class="rack-lines" stroke="#60734f" stroke-width="1.2"><path d="M212.5 140v27.5"/><path d="M280.0 140v27.5"/><path d="M347.5 140v27.5"/><path d="M145 153.75h270.0" opacity=".45"/></g><rect class="row-focus" x="140" y="135" width="280.0" height="37.5" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="0"/><text x="145" y="128" fill="#52624b" font-size="12">Ряд 01</text></g><g class="rack-row is-selected" data-plan-row="02" tabindex="0" role="button" aria-label="Выбрать ряд 02" aria-pressed="true"><rect class="rack-fill" x="145" y="247.5" width="270.0" height="27.5" fill="#fae7dc" stroke="#EA7752" stroke-width="1.7"/><g class="rack-lines" stroke="#EA7752" stroke-width="1.2"><path d="M212.5 247.5v27.5"/><path d="M280.0 247.5v27.5"/><path d="M347.5 247.5v27.5"/><path d="M145 261.25h270.0" opacity=".45"/></g><rect class="row-focus" x="140" y="242.5" width="280.0" height="37.5" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="1"/><text x="145" y="235.5" fill="#52624b" font-size="12">Ряд 02</text></g><g class="rack-row" data-plan-row="03" tabindex="0" role="button" aria-label="Выбрать ряд 03" aria-pressed="false"><rect class="rack-fill" x="145" y="395" width="270" height="15" fill="#e8ecdf" stroke="#60734f" stroke-width="1.7"/><g class="rack-lines" stroke="#60734f" stroke-width="1.2"><path d="M190 395v15"/><path d="M235 395v15"/><path d="M280 395v15"/><path d="M325 395v15"/><path d="M370 395v15"/><path d="M145 402.5h270" opacity=".45"/></g><rect class="row-focus" x="140" y="390" width="280" height="25" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="0"/><text x="145" y="383" fill="#52624b" font-size="12">Ряд 03</text></g><g fill="#708061" font-size="11"><text x="145" y="440">Среднегрузовые стеллажи</text><text x="577" y="120">Свободная зона</text><text x="114" y="497">Склад «Северный»</text></g></svg></div>
+                <div id="panel-front" class="view-panel" role="tabpanel" aria-labelledby="tab-front" tabindex="0" hidden><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 470" role="img" aria-label="Фронтальный вид выбранного ряда: четыре секции, три уровня, высота 4500 мм." fill="none" font-family="Segoe UI, Arial, sans-serif"><rect width="800" height="470" fill="#f8f9f3"/><g stroke="#e5e9df"><path d="M70 90H738M70 160H738M70 230H738M70 300H738M70 370H738"/></g><path d="M130 100V70m540 30V70M130 82H670m-544 4 8-8m532 8 8-8" stroke="#8c9a80"/><rect x="354" y="68" width="93" height="24" fill="#f8f9f3"/><text data-front-width="true" x="400" y="85" fill="#667953" font-size="15" text-anchor="middle">10 800 мм</text><g data-front-pallet="true"><path d="M130 145V370" stroke="#435D2D" stroke-width="5"/><path d="M265 145V370" stroke="#435D2D" stroke-width="5"/><path d="M400 145V370" stroke="#435D2D" stroke-width="5"/><path d="M535 145V370" stroke="#435D2D" stroke-width="5"/><path d="M670 145V370" stroke="#435D2D" stroke-width="5"/><path d="M130 220H670" stroke="#EA7752" stroke-width="5"/><path d="M130 290H670" stroke="#EA7752" stroke-width="5"/><path d="M130 355H670" stroke="#EA7752" stroke-width="5"/></g><g data-front-medium="true" style="display:none"><path d="M130 220V370" stroke="#435D2D" stroke-width="4"/><path d="M220 220V370" stroke="#435D2D" stroke-width="4"/><path d="M310 220V370" stroke="#435D2D" stroke-width="4"/><path d="M400 220V370" stroke="#435D2D" stroke-width="4"/><path d="M490 220V370" stroke="#435D2D" stroke-width="4"/><path d="M580 220V370" stroke="#435D2D" stroke-width="4"/><path d="M670 220V370" stroke="#435D2D" stroke-width="4"/><path d="M130 244H670" stroke="#EA7752" stroke-width="4"/><path d="M130 281H670" stroke="#EA7752" stroke-width="4"/><path d="M130 318H670" stroke="#EA7752" stroke-width="4"/><path d="M130 355H670" stroke="#EA7752" stroke-width="4"/></g><path data-front-dimension="true" d="M98 145H72m26 225H72M82 145v225m-4-221 8-8m-8 233 8-8" stroke="#8c9a80"/><rect data-front-height-bg="true" x="70" y="216" width="24" height="81" fill="#f8f9f3"/><text data-front-height="true" transform="translate(87 257) rotate(-90)" text-anchor="middle" fill="#667953" font-size="14">4 500 мм</text><path d="M108 373H693" stroke="#8c9a80" stroke-width="2"/><text data-front-caption="true" x="400" y="421" fill="#647452" font-size="14" text-anchor="middle">4 секции · 3 уровня · глубина 1 100 мм</text></svg><p class="front-note">Фронтальный вид · <span data-selected-name>Ряд 02</span></p></div>
+                <div class="canvas-caption"><span data-canvas-hint>Выберите ряд, чтобы увидеть параметры</span><span>Все размеры в мм</span></div>
+              </div>
+              <aside class="app-properties" aria-label="Параметры выбранного ряда">
+                <div class="selection-heading"><span class="panel-label">Выбранный объект</span><h3 data-selected-name>Ряд 02</h3><p data-property="type">Паллетный стеллаж</p></div>
+                <dl class="property-list"><div><dt>Секции</dt><dd data-property="bays">4</dd></div><div><dt>Ширина секции</dt><dd><span data-property="bayWidth">2 700</span><small>мм</small></dd></div><div><dt>Глубина</dt><dd><span data-property="depth">1 100</span><small>мм</small></dd></div><div><dt>Высота</dt><dd><span data-property="height">4 500</span><small>мм</small></dd></div><div><dt>Уровни</dt><dd data-property="levels">3</dd></div></dl>
+                <div class="mini-front"><span class="panel-label">Вид спереди</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 470" role="img" aria-label="Фронтальный вид выбранного ряда: четыре секции, три уровня, высота 4500 мм." fill="none" font-family="Segoe UI, Arial, sans-serif"><rect width="800" height="470" fill="#f8f9f3"/><g stroke="#e5e9df"><path d="M70 90H738M70 160H738M70 230H738M70 300H738M70 370H738"/></g><path d="M130 100V70m540 30V70M130 82H670m-544 4 8-8m532 8 8-8" stroke="#8c9a80"/><rect x="354" y="68" width="93" height="24" fill="#f8f9f3"/><text data-front-width="true" x="400" y="85" fill="#667953" font-size="15" text-anchor="middle">10 800 мм</text><g data-front-pallet="true"><path d="M130 145V370" stroke="#435D2D" stroke-width="5"/><path d="M265 145V370" stroke="#435D2D" stroke-width="5"/><path d="M400 145V370" stroke="#435D2D" stroke-width="5"/><path d="M535 145V370" stroke="#435D2D" stroke-width="5"/><path d="M670 145V370" stroke="#435D2D" stroke-width="5"/><path d="M130 220H670" stroke="#EA7752" stroke-width="5"/><path d="M130 290H670" stroke="#EA7752" stroke-width="5"/><path d="M130 355H670" stroke="#EA7752" stroke-width="5"/></g><g data-front-medium="true" style="display:none"><path d="M130 220V370" stroke="#435D2D" stroke-width="4"/><path d="M220 220V370" stroke="#435D2D" stroke-width="4"/><path d="M310 220V370" stroke="#435D2D" stroke-width="4"/><path d="M400 220V370" stroke="#435D2D" stroke-width="4"/><path d="M490 220V370" stroke="#435D2D" stroke-width="4"/><path d="M580 220V370" stroke="#435D2D" stroke-width="4"/><path d="M670 220V370" stroke="#435D2D" stroke-width="4"/><path d="M130 244H670" stroke="#EA7752" stroke-width="4"/><path d="M130 281H670" stroke="#EA7752" stroke-width="4"/><path d="M130 318H670" stroke="#EA7752" stroke-width="4"/><path d="M130 355H670" stroke="#EA7752" stroke-width="4"/></g><path data-front-dimension="true" d="M98 145H72m26 225H72M82 145v225m-4-221 8-8m-8 233 8-8" stroke="#8c9a80"/><rect data-front-height-bg="true" x="70" y="216" width="24" height="81" fill="#f8f9f3"/><text data-front-height="true" transform="translate(87 257) rotate(-90)" text-anchor="middle" fill="#667953" font-size="14">4 500 мм</text><path d="M108 373H693" stroke="#8c9a80" stroke-width="2"/><text data-front-caption="true" x="400" y="421" fill="#647452" font-size="14" text-anchor="middle">4 секции · 3 уровня · глубина 1 100 мм</text></svg></div>
+                <div class="object-total"><span>Длина ряда</span><strong>10 800 <small>мм</small></strong></div>
+              </aside>
+            </div>
+            <div class="app-status"><span><i aria-hidden="true"></i><span data-status role="status" aria-live="polite">Выбран ряд 02 · 4 секции</span></span><span>Привязка к сетке · 100 мм</span></div>
           </div>
-        </div>
-        <figcaption class="mockup-caption">Схематичная иллюстрация — не снимок экрана программы</figcaption>
+          <figcaption><span>Концепция будущего интерфейса, не скриншот текущей версии.</span><span class="interaction-hint">Попробуйте выбрать ряд и переключить вид.</span></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="section" id="features">
-      <div class="container">
-        <div class="section-heading">
-          <div class="eyebrow">ВОЗМОЖНОСТИ</div>
-          <h2>От размеров склада до готовой схемы</h2>
-          <p>Наглядный результат для согласования с клиентом и коммерческой работы.</p>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h7m2 0h7v7m0 2v7h-7m-2 0H4v-7"/><path d="M4 9h4V4"/></svg></div>
-            <h3>Быстрый старт</h3>
-            <p>Задайте помещение и сразу переходите к размещению стеллажей.</p>
-          </article>
-          <article class="feature-card">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 4v16m5-16v16m5-16v16M3 12h18"/></svg></div>
-            <h3>Наглядный план</h3>
-            <p>Покажите размещение оборудования в масштабе помещения.</p>
-          </article>
-          <article class="feature-card">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="16" rx="1"/><rect x="14" y="8" width="7" height="12" rx="1"/><path d="M3 10h7m-7 5h7m4-2h7"/></svg></div>
-            <h3>Два типа стеллажей</h3>
-            <p>Работайте с паллетными и среднегрузовыми системами в одном проекте.</p>
-          </article>
-          <article class="feature-card">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h8v16H3zM15 4h6v16h-6zM3 9h8m-8 6h8m4-6h6m-6 6h6"/></svg></div>
-            <h3>План и фронтальный вид</h3>
-            <p>Обсуждайте размещение стеллажей, высоты и количество уровней.</p>
-          </article>
-          <article class="feature-card">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 18h16M8 3v6m8 6v6"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="18" r="2"/></svg></div>
-            <h3>Гибкая компоновка</h3>
-            <p>Меняйте расположение и параметры, когда задача клиента уточняется.</p>
-          </article>
-          <article class="feature-card">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6zM15 3v5h4M9 12h7m-7 4h5"/></svg></div>
-            <h3>Результат для клиента</h3>
-            <p>Покажите готовую схему, согласуйте расстановку и используйте её для подготовки предложения.</p>
-          </article>
-        </div>
+    <section class="story-section start-section" id="workflow">
+      <div class="container start-grid" data-reveal>
+        <div class="section-copy"><p class="section-index">01 <span>Начать с задачи</span></p><h2>Быстрый старт<br>без AutoCAD.</h2><p class="lead">Для рабочей схемы не нужно осваивать целую CAD-систему.</p><p>Начните с того, что уже знаете: размеров помещения, типа стеллажей и количества секций. Основные действия — на виду, параметры — понятным языком.</p><p class="margin-note">Чтобы менеджер мог работать со схемой сам, прямо во время разговора.</p></div>
+        <div class="start-study"><div class="study-heading"><span>Сначала — ваше помещение</span><span class="technical-label">01 / 03</span></div><img src="assets/room-start.svg" width="560" height="390" alt="Задание размеров помещения 24 на 18 метров" loading="lazy"><ol class="start-steps"><li><span>01</span>Задайте размеры</li><li><span>02</span>Выберите стеллажи</li><li><span>03</span>Соберите расстановку</li></ol></div>
       </div>
     </section>
 
-    <section class="section section-dark" id="workflow">
-      <div class="container">
-        <div class="section-heading">
-          <div class="eyebrow">КАК РАБОТАЕТ</div>
-          <h2>Готовая схема за четыре шага</h2>
-        </div>
-        <div class="steps">
-          <div class="step"><span>01</span><h3>Задать помещение</h3><p>Внести основные размеры и геометрию склада.</p></div>
-          <div class="step"><span>02</span><h3>Создать компоновку</h3><p>Добавить стеллажи и задать параметры секций.</p></div>
-          <div class="step"><span>03</span><h3>Уточнить решение</h3><p>Меняйте расположение и параметры вместе с клиентом.</p></div>
-          <div class="step"><span>04</span><h3>Обсудить результат</h3><p>Согласуйте схему и используйте её в дальнейшей коммерческой работе.</p></div>
-        </div>
+    <section class="conversation-section" id="changes">
+      <div class="container conversation-grid" data-reveal>
+        <div class="section-copy"><p class="section-index">02 <span>Уточнить вместе</span></p><h2>Клиент меняет вводные.<br>Вы меняете план.</h2><p>Сдвинуть ряд, изменить количество секций, освободить место. Показывайте изменения в контексте всего помещения — обсуждать конкретную схему проще.</p><blockquote>«А если сделать<br>проход шире?»</blockquote><p class="quote-note">Обычный вопрос. Наглядный ответ.</p></div>
+        <figure class="change-study"><div class="study-heading"><span>Один ряд. Два положения.</span><span class="technical-label">Сравните</span></div><div class="change-canvas"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 420" role="img" aria-label="Демонстрация изменения прохода между двумя рядами стеллажей." fill="none" font-family="Segoe UI, Arial, sans-serif"><rect width="660" height="420" fill="#eef1e5"/><g stroke="#dbe1d2"><path d="M50 50H610V360H50zM50 130H610M50 210H610M50 290H610M150 50V360M250 50V360M350 50V360M450 50V360M550 50V360"/></g><g class="rack-row"><rect class="rack-fill" x="108" y="95" width="384" height="39.1" fill="#e8ecdf" stroke="#60734f" stroke-width="1.7"/><g class="rack-lines" stroke="#60734f" stroke-width="1.2"><path d="M204 95v39.1"/><path d="M300 95v39.1"/><path d="M396 95v39.1"/><path d="M108 114.55h384" opacity=".45"/></g><rect class="row-focus" x="103" y="90" width="394" height="49.1" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="0"/><text x="108" y="83" fill="#52624b" font-size="12">Ряд 01</text></g><rect x="108" y="136" width="384" height="110" fill="#e4e9d7"/><g id="moving-row"><g class="rack-row is-selected"><rect class="rack-fill" x="108" y="248" width="384" height="39.1" fill="#fae7dc" stroke="#EA7752" stroke-width="1.7"/><g class="rack-lines" stroke="#EA7752" stroke-width="1.2"><path d="M204 248v39.1"/><path d="M300 248v39.1"/><path d="M396 248v39.1"/><path d="M108 267.55h384" opacity=".45"/></g><rect class="row-focus" x="103" y="243" width="394" height="49.1" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="1"/><text x="108" y="236" fill="#52624b" font-size="12">Ряд 02</text></g></g><g stroke="#647c49" stroke-width="1.5"><path d="M518 134H558M538 134V248" id="aisle-dimension"/><path id="aisle-bottom" d="M518 248H558"/></g><rect x="504" y="176" width="68" height="30" rx="4" fill="#435D2D"/><text id="aisle-label" x="538" y="196" fill="#fffaf2" font-size="14" text-anchor="middle">3 200</text><text x="108" y="342" fill="#6c7d5a" font-size="13">Проход между рядами, мм</text></svg></div><div class="change-controls" role="group" aria-label="Ширина прохода в иллюстрации"><button data-aisle="3200" aria-pressed="true">Проход 3 200 мм</button><button data-aisle="3600" aria-pressed="false">Проход 3 600 мм</button></div><figcaption><span data-aisle-status role="status">Показан проход 3 200 мм.</span> Размеры условные, не рекомендация по проектированию.</figcaption></figure>
       </div>
     </section>
 
-    <section class="section" id="audience">
-      <div class="container two-col">
-        <div>
-          <div class="eyebrow">ДЛЯ КОГО</div>
-          <h2>Когда схему удобно создавать вместе с клиентом</h2>
-        </div>
-        <div class="audience-list">
-          <div><strong>Менеджерам по продажам стеллажей</strong><span>Быстро собрать, изменить и показать клиенту готовую схему расстановки прямо во время обсуждения.</span></div>
-          <div><strong>Проектировщикам</strong><span>Быстрее выполнять типовые компоновки и оперативно вносить изменения без лишней ручной отрисовки.</span></div>
-          <div><strong>Поставщикам складского оборудования</strong><span>Согласовывать компоновку с клиентом и быстрее переходить к расчёту комплектации и коммерческому предложению.</span></div>
-        </div>
+    <section class="story-section views-section" id="views">
+      <div class="container" data-reveal>
+        <div class="section-topline"><div><p class="section-index">03 <span>Увидеть целиком</span></p><h2>Место в помещении.<br>Устройство стеллажа.</h2></div><p>План помогает обсудить размещение и проходы. Фронтальный вид — высоту, секции и уровни. Два взгляда на одно решение.</p></div>
+        <div class="views-comparison"><figure class="plan-study"><div class="study-heading"><span>План помещения</span><span class="view-badge">01</span></div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="План склада 24 на 18 метров. Два паллетных ряда по четыре секции и среднегрузовой ряд из шести секций." fill="none" font-family="Segoe UI, Arial, sans-serif"><defs><pattern id="detail-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" stroke="#dfe5d8" stroke-width=".6"/></pattern></defs><rect width="800" height="600" fill="#f8f9f3"/><rect width="800" height="600" fill="url(#detail-grid)"/><g stroke="#8c9a80" stroke-width="1"><path d="M100 56V25M700 56V25M100 36H700M88 70H57M88 520H57M68 70V520"/><path d="m96 40 8-8m592 8 8-8M64 74l8-8m-8 458 8-8"/></g><g fill="#617153" font-size="13"><rect x="359" y="24" width="80" height="22" fill="#f8f9f3"/><text x="400" y="40" text-anchor="middle">24 000</text><text transform="translate(51 295) rotate(-90)" text-anchor="middle">18 000</text></g><path d="M460 520H100V70H700V520H610" stroke="#667b55" stroke-width="4"/><path d="M460 528H610M460 515v17m150-17v17" stroke="#94a08b"/><text x="535" y="551" fill="#728068" font-size="12" text-anchor="middle">Зона загрузки</text><g fill="#d9dfcf" stroke="#839474"><rect x="476" y="76" width="9" height="9"/><rect x="476" y="298" width="9" height="9"/></g><rect x="145" y="169" width="270" height="77" fill="#eff1e6"/><g stroke="#a3ad97" stroke-width="1"><path d="M430 167.5h30m-30 80h30m-12-80v80m-4-76 8-8m-8 84 8-8"/></g><rect x="426" y="194" width="46" height="24" rx="3" fill="#f8f9f3"/><text x="449" y="210" fill="#65764e" font-size="11" text-anchor="middle">3 200</text><g class="rack-row"><rect class="rack-fill" x="145" y="140" width="270.0" height="27.5" fill="#e8ecdf" stroke="#60734f" stroke-width="1.7"/><g class="rack-lines" stroke="#60734f" stroke-width="1.2"><path d="M212.5 140v27.5"/><path d="M280.0 140v27.5"/><path d="M347.5 140v27.5"/><path d="M145 153.75h270.0" opacity=".45"/></g><rect class="row-focus" x="140" y="135" width="280.0" height="37.5" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="0"/><text x="145" y="128" fill="#52624b" font-size="12">Ряд 01</text></g><g class="rack-row is-selected"><rect class="rack-fill" x="145" y="247.5" width="270.0" height="27.5" fill="#fae7dc" stroke="#EA7752" stroke-width="1.7"/><g class="rack-lines" stroke="#EA7752" stroke-width="1.2"><path d="M212.5 247.5v27.5"/><path d="M280.0 247.5v27.5"/><path d="M347.5 247.5v27.5"/><path d="M145 261.25h270.0" opacity=".45"/></g><rect class="row-focus" x="140" y="242.5" width="280.0" height="37.5" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="1"/><text x="145" y="235.5" fill="#52624b" font-size="12">Ряд 02</text></g><g class="rack-row"><rect class="rack-fill" x="145" y="395" width="270" height="15" fill="#e8ecdf" stroke="#60734f" stroke-width="1.7"/><g class="rack-lines" stroke="#60734f" stroke-width="1.2"><path d="M190 395v15"/><path d="M235 395v15"/><path d="M280 395v15"/><path d="M325 395v15"/><path d="M370 395v15"/><path d="M145 402.5h270" opacity=".45"/></g><rect class="row-focus" x="140" y="390" width="280" height="25" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="0"/><text x="145" y="383" fill="#52624b" font-size="12">Ряд 03</text></g><g fill="#708061" font-size="11"><text x="145" y="440">Среднегрузовые стеллажи</text><text x="577" y="120">Свободная зона</text><text x="114" y="497">Склад «Северный»</text></g></svg><figcaption>Где стоит ряд и сколько места остаётся вокруг.</figcaption></figure><figure class="front-study"><div class="study-heading"><span>Фронтальный вид</span><span class="view-badge">02</span></div><div class="front-study-inner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 470" role="img" aria-label="Фронтальный вид выбранного ряда: четыре секции, три уровня, высота 4500 мм." fill="none" font-family="Segoe UI, Arial, sans-serif"><rect width="800" height="470" fill="#f8f9f3"/><g stroke="#e5e9df"><path d="M70 90H738M70 160H738M70 230H738M70 300H738M70 370H738"/></g><path d="M130 100V70m540 30V70M130 82H670m-544 4 8-8m532 8 8-8" stroke="#8c9a80"/><rect x="354" y="68" width="93" height="24" fill="#f8f9f3"/><text data-front-width="true" x="400" y="85" fill="#667953" font-size="15" text-anchor="middle">10 800 мм</text><g data-front-pallet="true"><path d="M130 145V370" stroke="#435D2D" stroke-width="5"/><path d="M265 145V370" stroke="#435D2D" stroke-width="5"/><path d="M400 145V370" stroke="#435D2D" stroke-width="5"/><path d="M535 145V370" stroke="#435D2D" stroke-width="5"/><path d="M670 145V370" stroke="#435D2D" stroke-width="5"/><path d="M130 220H670" stroke="#EA7752" stroke-width="5"/><path d="M130 290H670" stroke="#EA7752" stroke-width="5"/><path d="M130 355H670" stroke="#EA7752" stroke-width="5"/></g><g data-front-medium="true" style="display:none"><path d="M130 220V370" stroke="#435D2D" stroke-width="4"/><path d="M220 220V370" stroke="#435D2D" stroke-width="4"/><path d="M310 220V370" stroke="#435D2D" stroke-width="4"/><path d="M400 220V370" stroke="#435D2D" stroke-width="4"/><path d="M490 220V370" stroke="#435D2D" stroke-width="4"/><path d="M580 220V370" stroke="#435D2D" stroke-width="4"/><path d="M670 220V370" stroke="#435D2D" stroke-width="4"/><path d="M130 244H670" stroke="#EA7752" stroke-width="4"/><path d="M130 281H670" stroke="#EA7752" stroke-width="4"/><path d="M130 318H670" stroke="#EA7752" stroke-width="4"/><path d="M130 355H670" stroke="#EA7752" stroke-width="4"/></g><path data-front-dimension="true" d="M98 145H72m26 225H72M82 145v225m-4-221 8-8m-8 233 8-8" stroke="#8c9a80"/><rect data-front-height-bg="true" x="70" y="216" width="24" height="81" fill="#f8f9f3"/><text data-front-height="true" transform="translate(87 257) rotate(-90)" text-anchor="middle" fill="#667953" font-size="14">4 500 мм</text><path d="M108 373H693" stroke="#8c9a80" stroke-width="2"/><text data-front-caption="true" x="400" y="421" fill="#647452" font-size="14" text-anchor="middle">4 секции · 3 уровня · глубина 1 100 мм</text></svg></div><figcaption>Как устроен выбранный ряд: высота, секции и уровни.</figcaption></figure></div>
+        <div class="view-footnote"><span class="coral-dash" aria-hidden="true"></span><p>Один выбранный ряд — согласованные параметры на плане и во фронтальном виде.</p></div>
       </div>
     </section>
 
-    <section class="section demo-section" id="demo">
-      <div class="container demo-box">
-        <div>
-          <div class="eyebrow">СТАТУС ПРОЕКТА</div>
-          <h2>RackSketch развивается и проходит пилотную проверку</h2>
-          <p>
-            Сейчас мы дорабатываем инструменты компоновки и проверяем рабочие сценарии.
-            Способ связаться с командой появится здесь позже.
-          </p>
-        </div>
-        <div class="demo-badge">v0.4<br><span>в разработке</span></div>
+    <section class="result-section" id="result">
+      <div class="container result-grid" data-reveal>
+        <figure class="layout-sheet"><div class="sheet-heading"><strong>Склад «Северный»</strong><span>Схема расстановки / 01</span></div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="План склада 24 на 18 метров. Два паллетных ряда по четыре секции и среднегрузовой ряд из шести секций." fill="none" font-family="Segoe UI, Arial, sans-serif"><defs><pattern id="sheet-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" stroke="#dfe5d8" stroke-width=".6"/></pattern></defs><rect width="800" height="600" fill="#f8f9f3"/><rect width="800" height="600" fill="url(#sheet-grid)"/><g stroke="#8c9a80" stroke-width="1"><path d="M100 56V25M700 56V25M100 36H700M88 70H57M88 520H57M68 70V520"/><path d="m96 40 8-8m592 8 8-8M64 74l8-8m-8 458 8-8"/></g><g fill="#617153" font-size="13"><rect x="359" y="24" width="80" height="22" fill="#f8f9f3"/><text x="400" y="40" text-anchor="middle">24 000</text><text transform="translate(51 295) rotate(-90)" text-anchor="middle">18 000</text></g><path d="M460 520H100V70H700V520H610" stroke="#667b55" stroke-width="4"/><path d="M460 528H610M460 515v17m150-17v17" stroke="#94a08b"/><text x="535" y="551" fill="#728068" font-size="12" text-anchor="middle">Зона загрузки</text><g fill="#d9dfcf" stroke="#839474"><rect x="476" y="76" width="9" height="9"/><rect x="476" y="298" width="9" height="9"/></g><rect x="145" y="169" width="270" height="77" fill="#eff1e6"/><g stroke="#a3ad97" stroke-width="1"><path d="M430 167.5h30m-30 80h30m-12-80v80m-4-76 8-8m-8 84 8-8"/></g><rect x="426" y="194" width="46" height="24" rx="3" fill="#f8f9f3"/><text x="449" y="210" fill="#65764e" font-size="11" text-anchor="middle">3 200</text><g class="rack-row"><rect class="rack-fill" x="145" y="140" width="270.0" height="27.5" fill="#e8ecdf" stroke="#60734f" stroke-width="1.7"/><g class="rack-lines" stroke="#60734f" stroke-width="1.2"><path d="M212.5 140v27.5"/><path d="M280.0 140v27.5"/><path d="M347.5 140v27.5"/><path d="M145 153.75h270.0" opacity=".45"/></g><rect class="row-focus" x="140" y="135" width="280.0" height="37.5" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="0"/><text x="145" y="128" fill="#52624b" font-size="12">Ряд 01</text></g><g class="rack-row is-selected"><rect class="rack-fill" x="145" y="247.5" width="270.0" height="27.5" fill="#fae7dc" stroke="#EA7752" stroke-width="1.7"/><g class="rack-lines" stroke="#EA7752" stroke-width="1.2"><path d="M212.5 247.5v27.5"/><path d="M280.0 247.5v27.5"/><path d="M347.5 247.5v27.5"/><path d="M145 261.25h270.0" opacity=".45"/></g><rect class="row-focus" x="140" y="242.5" width="280.0" height="37.5" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="1"/><text x="145" y="235.5" fill="#52624b" font-size="12">Ряд 02</text></g><g class="rack-row"><rect class="rack-fill" x="145" y="395" width="270" height="15" fill="#e8ecdf" stroke="#60734f" stroke-width="1.7"/><g class="rack-lines" stroke="#60734f" stroke-width="1.2"><path d="M190 395v15"/><path d="M235 395v15"/><path d="M280 395v15"/><path d="M325 395v15"/><path d="M370 395v15"/><path d="M145 402.5h270" opacity=".45"/></g><rect class="row-focus" x="140" y="390" width="280" height="25" rx="2" stroke="#EA7752" stroke-dasharray="4 3" opacity="0"/><text x="145" y="383" fill="#52624b" font-size="12">Ряд 03</text></g><g fill="#708061" font-size="11"><text x="145" y="440">Среднегрузовые стеллажи</text><text x="577" y="120">Свободная зона</text><text x="114" y="497">Склад «Северный»</text></g></svg><div class="sheet-footer"><span>24 × 18 м</span><span>Паллетные + среднегрузовые</span></div><figcaption>Пример рабочей схемы для обсуждения</figcaption></figure>
+        <div class="section-copy"><p class="section-index">04 <span>Договориться о решении</span></p><h2>Готовая схема.<br>Предметный разговор.</h2><p class="lead">Во многих типовых задачах этого достаточно, чтобы согласовать расстановку с клиентом.</p><ol class="result-list"><li><span>01</span><div><h3>Показать</h3><p>Объяснить, как оборудование разместится в помещении.</p></div></li><li><span>02</span><div><h3>Согласовать</h3><p>Обсудить изменения и зафиксировать подходящую компоновку.</p></div></li><li><span>03</span><div><h3>Перейти к предложению</h3><p>Использовать согласованную схему для расчёта комплектации и коммерческой работы.</p></div></li></ol><p class="scope-note">RackSketch решает задачу расстановки. Инженерные расчёты и полная проектная документация остаются отдельными задачами.</p></div>
       </div>
     </section>
+
+    <section class="audience-section" id="audience">
+      <div class="container audience-grid" data-reveal><div><p class="section-index">Для вашей команды</p><h2>Ближе к задаче.<br>Ближе к клиенту.</h2></div><div class="audience-list"><article><h3>Продажи стеллажей</h3><p>Быстро собрать, изменить и показать клиенту готовую схему прямо во время обсуждения.</p></article><article><h3>Проектировщики</h3><p>Быстрее выполнять типовые компоновки и вносить изменения без лишней ручной отрисовки.</p></article><article><h3>Поставщики оборудования</h3><p>Согласовать расстановку и быстрее перейти к комплектации и коммерческому предложению.</p></article></div></div>
+    </section>
+
+    <section class="project-section" id="project"><div class="container project-inner" data-reveal><div><p class="eyebrow">Развиваем RackSketch</p><h2>Рабочий инструмент.<br>С понятной задачей.</h2><p>Дорабатываем компоновку и проверяем рабочие сценарии. Программа проходит пилотную проверку.</p></div><div class="project-action"><span class="project-status"><i aria-hidden="true"></i>В разработке</span><a class="button" href="#product">Изучить концепцию интерфейса <span aria-hidden="true">↑</span></a><p>Выбор ряда и переключение видов<br>доступны в примере на этой странице.</p></div></div></section>
   </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <span>© 2026 RackSketch</span>
-      <span>Программа для создания и согласования схем расстановки стеллажей</span>
-    </div>
-  </footer>
+  <footer><div class="container footer-inner"><span>© 2026 RackSketch</span><span>Создать. Изменить. Показать. Согласовать.</span><a href="#top">Наверх ↑</a></div></footer>
 </body>
 </html>
