@@ -6,15 +6,16 @@
   <title>RackSketch — готовая схема клиенту без очереди к проектировщику</title>
   <meta name="description" content="RackSketch помогает менеджерам готовить и согласовывать типовые схемы расстановки стеллажей без очереди к проектировщику. Меньше рутины у инженеров, быстрее переход к коммерческому предложению.">
   <meta name="theme-color" content="#435D2D">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/RackSketch.ico" sizes="any">
   <link rel="stylesheet" href="styles.css">
+  <script src="download-config.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Перейти к содержанию</a>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="RackSketch — на главную"><img src="racksketch-wordmark-05.svg" width="370" height="78" alt="RackSketch"></a>
+      <a class="brand" href="#top" aria-label="RackSketch — на главную"><img class="brand-app-icon" src="assets/RackSketch.ico" width="40" height="40" alt=""><img src="racksketch-wordmark-05.svg" width="370" height="78" alt="RackSketch"></a>
       <nav aria-label="Основная навигация"><a href="#business">Для бизнеса</a><a href="#views">Возможности</a><a href="#audience">Для кого</a></nav>
       <a class="header-link" href="#project">Оценить для команды <span aria-hidden="true">↓</span></a>
     </div>
@@ -31,8 +32,8 @@
           <div class="hero-copy">
             <p class="hero-description">Менеджер готовит типовую схему.<br>Инженер решает сложные задачи.</p>
             <p>RackSketch помогает менеджеру быстро собрать и изменить рабочую схему расстановки стеллажей вместе с клиентом — без освоения полноценной CAD-системы.</p>
-            <a class="button" href="#business">Что это даёт вашей компании <span aria-hidden="true">↓</span></a>
-            <p class="platform">Для Windows <span>·</span> Паллетные и среднегрузовые стеллажи</p>
+            <div class="hero-actions"><a class="button" id="download-trial" data-trial-download data-goal="trial_download" href="#download">Скачать пробную версию <span aria-hidden="true">↓</span></a><a class="hero-secondary" href="#business">Посмотреть возможности</a></div>
+            <p class="platform">30 дней бесплатно · без регистрации <span>·</span> Windows 10/11 x64</p>
           </div>
         </div>
         <figure class="product-figure" id="product">
@@ -128,6 +129,13 @@
     </section>
 
     <section class="project-section" id="project"><div class="container project-inner" data-reveal><div><p class="eyebrow">Оцените на задачах своей компании</p><h2>Какие запросы менеджер<br>сможет закрыть сам?</h2><p>Возьмите типовой запрос клиента и покажите RackSketch менеджеру. Оцените, какую расстановку он сможет подготовить сам, а где по-прежнему нужен проектировщик.</p></div><div class="project-action"><span class="project-status"><i aria-hidden="true"></i>RackSketch · пилотная версия</span><a class="button" href="#product">Показать рабочий пример менеджеру <span aria-hidden="true">↑</span></a><p>На странице — интерактивная концепция интерфейса.<br>Выберите ряд и переключите план / фронтальный вид.</p></div></div></section>
+    <section class="download-section" id="download" aria-labelledby="download-title">
+      <div class="container download-grid">
+        <div class="download-intro"><p class="eyebrow coral">Попробуйте на своём проекте</p><h2 id="download-title">RackSketch в работе</h2><p>30 дней полного функционала. Без регистрации и банковской карты. Пробный период начинается при первом запуске программы. После его окончания проекты остаются доступны для просмотра.</p></div>
+        <div class="download-action"><div class="download-product"><img src="assets/RackSketch.ico" width="48" height="48" alt=""><div><strong>RackSketch <span data-trial-version></span></strong><small>Windows 10/11 · x64 · <span data-trial-size></span></small></div></div><a class="button" data-trial-download data-goal="trial_download" href="#download">Скачать для Windows <span aria-hidden="true">↓</span></a><p class="download-hash">SHA-256: <code data-trial-sha256></code></p></div>
+      </div>
+      <div class="container download-faq"><h3>Коротко о пробной версии</h3><details><summary>Сколько длится пробная версия?</summary><p>30 дней с первого запуска RackSketch.</p></details><details><summary>Нужна ли банковская карта?</summary><p>Нет. Регистрация и банковская карта не требуются.</p></details><details><summary>Почему Windows показывает «Неизвестный издатель»?</summary><p>Пилотный установщик пока не имеет цифровой подписи. Windows SmartScreen может показать предупреждение. Если вы скачали его с racksketch.ru, выберите «Подробнее» → «Выполнить в любом случае».</p></details></div>
+    </section>
   </main>
   <footer><div class="container footer-inner"><span>© 2026 RackSketch</span><span>Типовые схемы — ближе к продажам.</span><a href="#top">Наверх ↑</a></div></footer>
 </body>

@@ -1,6 +1,16 @@
 /* Small, local interactions for an explicitly labelled interface concept. */
 (() => {
   'use strict';
+  const download = window.rackSketchDownload;
+  if (download) {
+    document.querySelectorAll('[data-trial-download]').forEach(link => {
+      link.href = download.url;
+      link.setAttribute('aria-label', `${link.textContent.trim()} — ${download.filename}, Windows x64`);
+    });
+    document.querySelectorAll('[data-trial-version]').forEach(el => { el.textContent = download.version; });
+    document.querySelectorAll('[data-trial-size]').forEach(el => { el.textContent = `${(download.sizeBytes / 1048576).toFixed(2).replace('.', ',')} МБ`; });
+    document.querySelectorAll('[data-trial-sha256]').forEach(el => { el.textContent = download.sha256; });
+  }
   const app = document.querySelector('.product-app');
   const rows = {
     '01': { type: 'Паллетный стеллаж', bays: '4', bayWidth: '2 700', depth: '1 100', height: '4 500', levels: '3' },
