@@ -6,6 +6,17 @@
     document.querySelectorAll('[data-trial-download]').forEach(link => {
       link.href = download.url;
       link.setAttribute('aria-label', `${link.textContent.trim()} — ${download.filename}, Windows x64`);
+      if (link.dataset.goal === 'trial_download') {
+        link.addEventListener('click', () => {
+          try {
+            if (typeof window.ym === 'function') {
+              window.ym(113222336, 'reachGoal', 'trial_download');
+            }
+          } catch {
+            // Analytics must never interrupt the download.
+          }
+        });
+      }
     });
     document.querySelectorAll('[data-trial-version]').forEach(el => { el.textContent = download.version; });
     document.querySelectorAll('[data-trial-size]').forEach(el => { el.textContent = `${(download.sizeBytes / 1048576).toFixed(2).replace('.', ',')} МБ`; });
